@@ -12,7 +12,7 @@ function Header( {score, bestScore} ) {
           </p>
         </div>
         <div className="score-board">
-        <h5>Score: {score}</h5>
+        <h5>Current Score: {score}</h5>
         <h5>Best Score: {bestScore}</h5>
         </div>
         </header>

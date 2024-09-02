@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 import "../styles/App.css";
 import Header from "../components/Header";
 import Card from "../components/Card";
-import Footer from "../components/Footer";
-
+import { getPokemon } from "./pokemonApi";
 
 
 function App() {
@@ -13,8 +12,9 @@ function App() {
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
 
+  
 
-  const [cardSelect, setCardSelect] = useState(0) 
+  const [cardSelect, setCardSelect] = useState([]) 
 
     useEffect(() => { 
 
@@ -22,7 +22,7 @@ function App() {
     }, [cardSelect])
 
   // state of the page changes when pokecards are interacted with 
-
+    console.log(getPokemon(151))
   
   
 
@@ -34,8 +34,6 @@ function App() {
             <Card />
           </div>
       </main>
-
-      <Footer />
     </div>
   );
 }
