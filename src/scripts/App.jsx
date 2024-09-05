@@ -23,9 +23,9 @@ function App() {
 
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
-
+  const [clickedPokemon, setClickedPokemon] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  
 
 
   const getRandomPokemon = (data, count) => {
@@ -81,21 +81,46 @@ function App() {
 
 
 
-  // const handleShuffle = async () => { 
-  //   const shuffledPokemon = getRandomPokemon(pokemonData, pokemonData.length);
-  //   setPokemonData(shuffledPokemon);
+  const handleClick = (e) => {
+    const pokeName = e.currentTarget.value; // Use e.currentTarget for accurate reference
+  
+    if (clickedPokemon.includes(pokeName)) {
+     
+      alert('Game Over! You clicked the same Pokémon.');
+      setScore(0);
+      setClickedPokemon([]);
+      formattedPokemon(); 
+    } else {
+  
+      setClickedPokemon(prevClicked => [...prevClicked, pokeName]);
+  
+      setScore(prevScore => {
+        const newScore = prevScore + 1;
+  
+        if (score + 1 > bestScore) {
+          setBestScore(score + 1);
+        }
+      
+        if (newScore === 5) {
+          setTimeout(() => {
+            alert('You win!');
+            setScore(0);
+            setClickedPokemon([]);
+            formattedPokemon(); // Restart the game with new Pokémon
+          }, 1000);
+        }
 
-  //   }
-
-    const handleShuffle = async (e) => { 
+        
+  
+        return newScore;
+      });
+  
+      // Shuffle Pokémon after each click
       const shuffledPokemon = getRandomPokemon(pokemonData, pokemonData.length);
       setPokemonData(shuffledPokemon);
-      await console.log(e.target.value)
-      }
-
-
-
-
+    }
+  };
+  
 
 
 
@@ -121,10 +146,9 @@ function App() {
 
         <div className="card-container">
           {pokemonData.map((pokemon, index) => (
-            <button key={index} onClick={handleShuffle} value={pokemon.pokeName} ><Card key={index} pokeImage={pokemon.pokeImage} pokeName={pokemon.pokeName} /></button>
+            <button key={index} onClick={handleClick}  value={pokemon.pokeName} ><Card key={index} pokeImage={pokemon.pokeImage} pokeName={pokemon.pokeName} /></button>
           ))}
         </div>
-
       </main>
     </div>
   );
